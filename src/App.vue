@@ -1,54 +1,59 @@
 <template>
   <div id="app">
-    <div class="content">
-      <div class="content-header">
-        <div class="padding">
-          <h1>Welcome</h1>
-        </div>
-      </div>
-      <div class="content-main">
-        <div class="padding">
-          <p>
-            Choose the button below to set the color of the selected range to
-            green.
-          </p>
-          <textarea
-              v-model="prompt"
-          ></textarea>
-          <br />
-          <button @click="runScript">Run</button>
-          <br>
-          Answer:
-          <p>{{ answer }}</p>
-        </div>
-      </div>
-    </div>
+    <v-card>
+      <v-card-text>
+        <v-textarea
+            v-model="prompt"
+            label="Prompt"
+            outlined
+        ></v-textarea>
+        <v-btn @click="runScript">Run</v-btn>
+      </v-card-text>
+    </v-card>
+
+<!--    <div class="content">-->
+<!--      <div class="content-header">-->
+<!--        <div class="padding">-->
+<!--          <h1>Welcome</h1>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="content-main">-->
+<!--        <div class="padding">-->
+<!--          <p>-->
+<!--            Choose the button below to set the color of the selected range to-->
+<!--            green.-->
+<!--          </p>-->
+<!--          <textarea-->
+<!--              v-model="prompt"-->
+<!--          ></textarea>-->
+<!--          <br />-->
+<!--          <button @click="runScript">Run</button>-->
+<!--          <br>-->
+<!--          Answer:-->
+<!--          <p>{{ answer }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
-<script>
-import { fetchAnswer } from './lib/api';
-  export default {
-    name: 'App',
-    data() {
-      return {
-        prompt: '',
-        answer: ''
-      };
-    },
-    methods: {
-      async runScript() {
-        const message = await fetchAnswer(prompt)
-        this.answer = message
-        const script = message.match(/```javascript([\s\S]*?)```/)[1]
-        console.log(script)
-        if (!script) {
-          return;
-        }
-        eval(script);
-      }
-    }
-  };
+<script setup>
+import { ref } from 'vue'
+import { fetchAnswer } from './lib/api'
+
+const prompt = ref('')
+const answer = ref('')
+
+const runScript = async () => {
+  const message = await fetchAnswer(prompt)
+  answer.value = message
+  const script = message.match(/```javascript([\s\S]*?)```/)[1]
+  console.log(script)
+  if (!script) {
+    return;
+  }
+  eval(script);
+}
 </script>
 
 <style>
