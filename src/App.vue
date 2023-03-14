@@ -121,7 +121,7 @@ const runScript = async () => {
 
   loading.value = true
   try {
-    const message = await fetchAnswer(prompt, apiKey.value)
+    const message = await fetchAnswer(prompt.value, apiKey.value)
     answer.value = message
     const script = message.match(/```javascript([\s\S]*?)```/)[1]
     if (!script) {
