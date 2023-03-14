@@ -1,7 +1,6 @@
 
 
-export const fetchAnswer = async (prompt) => {
-    const apiKey = process.env.VUE_APP_OPENAI_API_KEY;
+export const fetchAnswer = async (prompt, apiKey) => {
     const promptPrefix = "使用 Office JavaScript API 的 Excel API。"
 
     const options = {
@@ -18,6 +17,7 @@ export const fetchAnswer = async (prompt) => {
             ]
         })
     };
+
     try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', options);
         const data = await res.json()
