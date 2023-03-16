@@ -119,17 +119,20 @@ const runScript = async () => {
     return
   }
 
+  answer.value = ''
   loading.value = true
   try {
     const message = await fetchAnswer(prompt.value, apiKey.value)
-    answer.value = message
+    console.log(message)
     const script = message.match(/```javascript([\s\S]*?)```/)[1]
     if (!script) {
       return;
     }
     eval(script);
+    answer.value = message
   } catch (e) {
-    showSnackbar('Sorry, your command was not executed successfully. You can try again.')
+    console.log(e)
+    answer.value = 'Sorry, your command was not executed successfully. You can try again.'
   }
   loading.value = false
 
@@ -138,6 +141,5 @@ const runScript = async () => {
 
 <style>
   .main-wrapper {
-    height: 100vh;
   }
 </style>
