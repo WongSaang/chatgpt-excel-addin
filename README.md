@@ -1,4 +1,8 @@
-# chatgpt-excel-addin
+# ChatGPT Excel Add-in
+
+## Setup
+
+See [Use Vue to build an Excel task pane add-in](https://learn.microsoft.com/en-us/office/dev/add-ins/quickstarts/excel-quickstart-vue) .
 
 ## Project setup
 ```
